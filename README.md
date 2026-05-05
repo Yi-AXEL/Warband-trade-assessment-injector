@@ -50,3 +50,6 @@ Troubleshooting:
 - There're Chinese in the script, just use AI to swap them or troubleshoot for you.
 
 Author: Yi-AXEL
+LLM used for generating the bulk of the code: Deepseek V4 Flash and Pro.
+
+Note: DSV4 does have basic understanding of M&B Module system, but it can hallucinate about specific opcodes, as are GPT 5.3 and Claude sonnet 4.6. I have to establish a table of opcode to reduce the hallucination. You should definitely establish a skill doc for it if you want to work with it to generate code for M&B.
