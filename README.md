@@ -5,7 +5,7 @@ A simple warband trade assessment menus injector that augment it to generate an 
 Input for test:
 
 - Warband Native 1.174
-- Home-modified version of Prophecy of Pendor
+- Home-modified version of Prophecy of Pendor 3.9.5 who does not modified PoP's trade assessment menu
 
 Quick start (injector):
 
