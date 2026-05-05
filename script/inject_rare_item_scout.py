@@ -17,7 +17,7 @@ from typing import List, Tuple, Optional, Set
 
 
 # ============================================================
-# 0. 诊断基础设施
+# 0. 诊断模式基础设定
 # ============================================================
 
 DIAG = False
@@ -273,7 +273,7 @@ def _peek_opt_text(tokens: List[bytes], idx: int, bound: int):
 
 def _find_opt_boundary(tokens: List[bytes], idx: int, tokens_len: int) -> int:
     """找到当前选项的边界：下一个 "."（终止符）或 "mno_"（下个选项）的位置。
-    返回 bound index（不包含 bound 本身）。如果找不到，返回 tokens_len。
+    返回 bound index（不包含 bound 本身）。如果can't find，返回 tokens_len。
     """
     for j in range(idx, tokens_len):
         if tokens[j] == b".":
@@ -480,7 +480,7 @@ class QStrManager:
 
 
 # ============================================================
-# 5. 扫描代码生成器
+# 5. 扫描代码生成器 - 前缀列表 - 暂未考虑到模组添加额外前缀的情况
 # ============================================================
 
 IMOD_PREFIXES = [
@@ -522,7 +522,7 @@ IMOD_PREFIXES_ZH_CN = [
 
 
 # ============================================================
-# 5a. 文本辞典（多语言支持，Phase 3）
+# 5a. 文本辞典（支持多语言，目前暂时只支持英语和简体中文）
 # ============================================================
 
 TEXTS_EN = {
@@ -747,7 +747,7 @@ def make_begin_hint_ops(skill_ref: int,
                          qstr_mgr: QStrManager,
                          lang: str = "en",
                          with_diag: bool = False) -> List[Operation]:
-    """生成 menu_town_trade_assessment_begin 的提示文本操作。"""
+    """生成 menu_town_trade_assessment_begin 的提示文本"""
     ops: List[Operation] = []
     TEXTS = TEXTS_ZH_CN if lang == "zh-CN" else TEXTS_EN
 
@@ -1198,7 +1198,7 @@ def post_inject_verify(menus_path: str) -> None:
     try:
         target2 = next(m for m in menus2 if m.raw_id == "menu_town_trade_assessment")
     except StopIteration:
-        diag("post_inject_verify: 找不到 menu_town_trade_assessment")
+        diag("post_inject_verify: can't find menu_town_trade_assessment")
         return
 
     diag(f"--- 写入文件后验证 ---")
@@ -1383,10 +1383,10 @@ def main() -> None:
         return
 
     if not os.path.exists(menus_path):
-        print(f"错误：找不到 {menus_path}")
+        print(f"错误：can't find {menus_path}")
         sys.exit(1)
     if not os.path.exists(qstr_path):
-        print(f"错误：找不到 {qstr_path}（可用 --qstr-file 指定）")
+        print(f"错误：can't find {qstr_path}（可用 --qstr-file 指定）")
         sys.exit(1)
 
     menus = parse_menu_bytes(menus_path)
@@ -1398,7 +1398,7 @@ def main() -> None:
             target = m
             break
     if not target:
-        print("错误：找不到 menu_town_trade_assessment")
+        print("错误：can't find menu_town_trade_assessment")
         sys.exit(1)
     print(f"  目标: {target.raw_id}")
 
@@ -1409,7 +1409,7 @@ def main() -> None:
             target_begin = m
             break
     if not target_begin:
-        print("错误：找不到 menu_town_trade_assessment_begin")
+        print("错误：can't find menu_town_trade_assessment_begin")
         sys.exit(1)
     print(f"  begin 菜单: {target_begin.raw_id} (ops: {len(target_begin.ops)})")
 
